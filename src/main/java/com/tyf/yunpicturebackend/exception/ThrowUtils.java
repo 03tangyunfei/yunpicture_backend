@@ -1,4 +1,4 @@
-package com.tyf.yunpicturebacked.exception;
+package com.tyf.yunpicturebackend.exception;
 
 /*
 * 异常处理工具类*/

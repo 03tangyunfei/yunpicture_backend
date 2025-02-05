@@ -1,6 +1,6 @@
-package com.tyf.yunpicturebacked.common;
+package com.tyf.yunpicturebackend.common;
 
-import com.tyf.yunpicturebacked.exception.ErrorCode;
+import com.tyf.yunpicturebackend.exception.ErrorCode;
 /*
 * 响应结果工具类
 * */

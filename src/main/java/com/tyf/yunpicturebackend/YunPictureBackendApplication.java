@@ -1,17 +1,19 @@
-package com.tyf.yunpicturebacked;
+package com.tyf.yunpicturebackend;
+
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
+
 @SpringBootApplication
-@MapperScan("com.tyf.yunpicturebacked.mapper")
+@MapperScan("com.tyf.yunpicturebackend.mapper")
 @EnableAspectJAutoProxy(exposeProxy = true)
-public class YunPictureBackedApplication {
+public class YunPictureBackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(YunPictureBackedApplication.class, args);
+        SpringApplication.run(YunPictureBackendApplication.class, args);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.tyf.yunpicturebacked.common;
+package com.tyf.yunpicturebackend.common;
 
 import lombok.Data;
 

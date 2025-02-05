@@ -1,7 +1,7 @@
-package com.tyf.yunpicturebacked.exception;
+package com.tyf.yunpicturebackend.exception;
 
-import com.tyf.yunpicturebacked.common.BaseResponse;
-import com.tyf.yunpicturebacked.common.ResultUtils;
+import com.tyf.yunpicturebackend.common.BaseResponse;
+import com.tyf.yunpicturebackend.common.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

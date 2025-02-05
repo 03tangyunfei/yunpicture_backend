@@ -1,4 +1,4 @@
-package com.tyf.yunpicturebacked.exception;
+package com.tyf.yunpicturebackend.exception;
 
 /**
  *自定义业务异常

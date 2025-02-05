@@ -1,10 +1,10 @@
-package com.tyf.yunpicturebacked;
+package com.tyf.yunpicturebackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class YunPictureBackedApplicationTests {
+class YunPictureBackendApplicationTests {
 
     @Test
     void contextLoads() {
