@@ -16,6 +16,7 @@ import com.tyf.yunpicturebackend.model.vo.UserVO;
 import com.tyf.yunpicturebackend.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
