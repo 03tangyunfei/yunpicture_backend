@@ -3,6 +3,8 @@ package com.tyf.yunpicturebackend.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tyf.yunpicturebackend.model.dto.picture.PictureQueryRequest;
+import com.tyf.yunpicturebackend.model.dto.picture.PictureReviewRequest;
+import com.tyf.yunpicturebackend.model.dto.picture.PictureUploadByBatchRequest;
 import com.tyf.yunpicturebackend.model.dto.picture.PictureUploadRequest;
 import com.tyf.yunpicturebackend.model.dto.user.UserQueryRequest;
 import com.tyf.yunpicturebackend.model.entity.Picture;
@@ -30,12 +32,12 @@ public interface PictureService extends IService<Picture> {
     /**
      * 上传图片
      *
-     * @param multipartFile
+     * @param InputSource 文件输入源
      * @param pictureUploadRequest
      * @param loginUser
      * @return
      */
-    PictureVO uploadPicture(MultipartFile multipartFile,
+    PictureVO uploadPicture(Object InputSource,
                             PictureUploadRequest pictureUploadRequest,
                             User loginUser);
 
@@ -66,5 +68,22 @@ public interface PictureService extends IService<Picture> {
      */
     Page<PictureVO> getPictureVOPage(Page<Picture> picturePage, HttpServletRequest request);
 
+    /**
+     * 图片审核
+     *
+     * @param pictureReviewRequest
+     * @param loginUser
+     */
+    void doPictureReview(PictureReviewRequest pictureReviewRequest, User loginUser);
 
+
+    void fillReviewParams(Picture picture, User loginUser);
+
+    /**
+     * 批量抓取和上传图片
+     * @param pictureUploadByBatchRequest
+     * @param loginUser
+     * @return 成功上传的图片数
+     */
+    Integer uploadPictureByBatch(PictureUploadByBatchRequest pictureUploadByBatchRequest, User loginUser);
 }

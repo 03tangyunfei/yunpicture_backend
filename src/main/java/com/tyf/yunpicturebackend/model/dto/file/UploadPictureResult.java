@@ -40,5 +40,6 @@ public class UploadPictureResult {
      */
     private String picFormat;
 
+
 }
 
