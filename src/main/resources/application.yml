@@ -2,6 +2,10 @@ server:
   port: 8123
   servlet:
     context-path: /api
+    #cookie 30天过期
+    session:
+      cookie:
+        max-age: 2592000
 spring:
   application:
     name: yun-picture-backend
@@ -12,7 +16,11 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 5000
-
+     #Session 配置
+    session:
+      store-type: redis
+      # session 30天后过期
+      timeout: 259200
   # 数据库配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -1,4 +1,4 @@
-package com.tyf.yunpicturebackend.manage;
+package com.tyf.yunpicturebackend.manager;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;

@@ -1,4 +1,4 @@
-package com.tyf.yunpicturebackend.manage.upload;
+package com.tyf.yunpicturebackend.manager.upload;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;

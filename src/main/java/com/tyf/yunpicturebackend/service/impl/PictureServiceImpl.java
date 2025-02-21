@@ -6,14 +6,14 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qcloud.cos.utils.StringUtils;
 import com.tyf.yunpicturebackend.exception.BusinessException;
 import com.tyf.yunpicturebackend.exception.ErrorCode;
 import com.tyf.yunpicturebackend.exception.ThrowUtils;
-import com.tyf.yunpicturebackend.manage.FileManager;
-import com.tyf.yunpicturebackend.manage.upload.FilePictureUpload;
-import com.tyf.yunpicturebackend.manage.upload.PictureUploadTemplate;
-import com.tyf.yunpicturebackend.manage.upload.UrlPictureUpload;
+import com.tyf.yunpicturebackend.manager.CosManager;
+import com.tyf.yunpicturebackend.manager.FileManager;
+import com.tyf.yunpicturebackend.manager.upload.FilePictureUpload;
+import com.tyf.yunpicturebackend.manager.upload.PictureUploadTemplate;
+import com.tyf.yunpicturebackend.manager.upload.UrlPictureUpload;
 import com.tyf.yunpicturebackend.model.dto.file.UploadPictureResult;
 import com.tyf.yunpicturebackend.model.dto.picture.PictureQueryRequest;
 import com.tyf.yunpicturebackend.model.dto.picture.PictureReviewRequest;
@@ -29,11 +29,11 @@ import com.tyf.yunpicturebackend.mapper.PictureMapper;
 import com.tyf.yunpicturebackend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
-import org.jsoup.internal.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.BeanUtils;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -65,6 +65,9 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture> impl
 
     @Resource
     private UrlPictureUpload urlPictureUpload;
+
+    @Resource
+    private CosManager cosManager;
 
 
     @Override
@@ -119,14 +122,13 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture> impl
         // 构造要入库的图片信息
         Picture picture = new Picture();
         picture.setUrl(uploadPictureResult.getUrl());
-
+        picture.setThumbnailUrl(uploadPictureResult.getThumbnailUrl());
+        //支持外层传递图片名称
         String picName = uploadPictureResult.getPicName();
-
         if (pictureUploadRequest != null && StrUtil.isNotBlank(pictureUploadRequest.getPicName())){
             picName = pictureUploadRequest.getPicName();
         }
         picture.setName(picName);
-
         picture.setPicSize(uploadPictureResult.getPicSize());
         picture.setPicWidth(uploadPictureResult.getPicWidth());
         picture.setPicHeight(uploadPictureResult.getPicHeight());
@@ -352,6 +354,28 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture> impl
         }
         return uploadCount;
     }
+
+    @Async
+    @Override
+    public void clearPictureFile(Picture oldPicture) {
+        // 判断该图片是否被多条记录使用
+        String pictureUrl = oldPicture.getUrl();
+        long count = this.lambdaQuery()
+                .eq(Picture::getUrl, pictureUrl)
+                .count();
+        // 有不止一条记录用到了该图片，不清理
+        if (count > 1) {
+            return;
+        }
+        // FIXME 注意，这里的 url 包含了域名，实际上只要传 key 值（存储路径）就够了
+        cosManager.deleteObject(oldPicture.getUrl());
+        // 清理缩略图
+        String thumbnailUrl = oldPicture.getThumbnailUrl();
+        if (StrUtil.isNotBlank(thumbnailUrl)) {
+            cosManager.deleteObject(thumbnailUrl);
+        }
+    }
+
 
 
 }

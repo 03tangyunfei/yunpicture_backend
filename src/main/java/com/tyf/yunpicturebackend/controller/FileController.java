@@ -10,7 +10,7 @@ import com.tyf.yunpicturebackend.common.ResultUtils;
 import com.tyf.yunpicturebackend.constant.UserConstant;
 import com.tyf.yunpicturebackend.exception.BusinessException;
 import com.tyf.yunpicturebackend.exception.ErrorCode;
-import com.tyf.yunpicturebackend.manage.CosManager;
+import com.tyf.yunpicturebackend.manager.CosManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
