@@ -6,7 +6,6 @@ import java.io.Serializable;
 
 @Data
 public class SpaceAddRequest implements Serializable {
-
     /**
      * 空间名称
      */
